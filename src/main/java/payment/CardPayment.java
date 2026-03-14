@@ -4,6 +4,8 @@ import Exceptions.CardPaymentFailedException;
 
 public class CardPayment implements PaymentMethod {
 
+    public CardPayment() {}
+
     public double paymentFee(double fee) {
         if (fee <= 0)
             throw new CardPaymentFailedException("Too low value");
