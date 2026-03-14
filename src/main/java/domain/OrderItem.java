@@ -27,4 +27,8 @@ public class OrderItem {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+    public String toString() {
+        return ("Item ID: " + id + ", item name: " + name + ", item price: " + price);
+    }
 }

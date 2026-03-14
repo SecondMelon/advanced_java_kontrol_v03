@@ -1,18 +1,15 @@
 package domain;
 
 import Exceptions.ItemsOverLimitException;
-import Exceptions.PayPalPaymentFailedException;
 import payment.PaymentMethod;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Order extends OrderProcessorTemplate {
 
     private List<OrderItem> orderList = new ArrayList<>();
     private Set<Integer> itemId = new HashSet<>();
+    private Map<Integer, OrderItem> orderMap = new HashMap<>();
     private PaymentMethod paymentMethod;
     private final String userEmail;
 
@@ -27,8 +24,23 @@ public class Order extends OrderProcessorTemplate {
 
         orderList.add(orderItem);
         itemId.add(orderItem.getId());
+        orderMap.put(orderItem.getId(),orderItem);
 
         return true;
+    }
+
+    public String getAllOrderedItems() {
+        StringBuilder result = new StringBuilder();
+        for (OrderItem order : orderList) {
+            result.append(order.toString()).append("\n");
+        }
+
+        return result.toString();
+    }
+
+    public Optional<OrderItem> findById(int id) {
+        if (itemId.contains(id)) return Optional.of(orderMap.get(id));
+        return Optional.empty();
     }
 
     public void pay() {
